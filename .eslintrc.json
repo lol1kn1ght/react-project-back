@@ -17,10 +17,7 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
-    // "@typescript-eslint/naming-convention": [
-    //   "error",
-    //   { "selector": "property", "format": ["snake_case"] }
-    // ],
+    "import/no-unresolved": "off",
     "indent": [2, 2, { "SwitchCase": 1 }],
     "linebreak-style": ["error", "windows"],
     "quotes": ["error", "single"],
