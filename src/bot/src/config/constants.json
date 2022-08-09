@@ -1,0 +1,22 @@
+{
+  "dev_token": "NjU1MTQwMTQzOTU4ODUxNjE0.XfPwzg.rCq5Bjt08oAAn3mY8gFUTqyEdcQ",
+  "token": "NTM3MjkyODYzNDM2ODgxOTMx.XEc2-Q.xFGxrY7u44KLQIIAdnAWPR9LxrA",
+  "mongo": {
+    "auth": true,
+    "pass": "pASSw0rdgtaEZab0ba3b0bo",
+    "ip": "194.226.28.38",
+    "ip_": "89.208.81.104",
+    "user": "gtaEZ",
+    "db": "gtaEZ",
+    "port": 25567
+  },
+  "dev_mongo": {
+    "auth": false,
+    "pass": "pASSw0rdgtaEZab0ba3b0bo",
+    "ip": "194.226.28.38",
+    "ip_": "89.208.81.104",
+    "user": "gtaEZ",
+    "db": "gtaEZ",
+    "port": 25567
+  }
+}

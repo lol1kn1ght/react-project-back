@@ -1,14 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { session_id_type } from 'types';
+import { headers_type, session_id_type } from '@server/types';
 import { decrypt } from './decrypt';
+import { db } from '../../server/server';
 
-type headers_type =
-  | Partial<{
-      authorisation: string;
-    }>
-  | undefined;
-
-export function check_authorisation(
+export async function check_authorisation(
   req: Request,
   res: Response,
   next: NextFunction
@@ -49,6 +44,34 @@ export function check_authorisation(
       message: 'Ваша сессия истекла, авторизируйтесь снова',
     });
     return;
+  }
+
+  if (token != 'authorisation') {
+    const user_data =
+      (await db
+        .collection('users')
+        .find(
+          {
+            token,
+          },
+          {
+            projection: {
+              _id: 0,
+              login: 1,
+            },
+          }
+        )
+        .toArray()) || [];
+
+    console.log(user_data);
+
+    if (!user_data[0]) {
+      res.status(401);
+      res.send({
+        message: 'Указан некорректный токен',
+      });
+      return;
+    }
   }
 
   next();

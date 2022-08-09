@@ -1,0 +1,30 @@
+import { type CommandInteraction } from 'discord.js';
+import { type Interaction_settings, args_type } from '../../types';
+import { InteractionTemplate } from '../../config/templates_list';
+
+export const settings: Readonly<Interaction_settings> = {
+  interaction: {
+    name: SLASH_EXAMPLE,
+    description: SLASH_EXAMPLE,
+  },
+};
+
+export class Execute extends InteractionTemplate {
+  constructor(
+    private args: args_type,
+    private interaction: CommandInteraction
+  ) {
+    super(interaction);
+    this.execute();
+  }
+
+  async execute() {
+    try {
+    } catch (err) {
+      F.handle_error(<Error>err, `/-команда ${this.interaction.commandName}`);
+      return this.replyFalseH(
+        `При выполнении команды возникла ошибка. Обратитесь к <@${F.config.owner}>`
+      );
+    }
+  }
+}

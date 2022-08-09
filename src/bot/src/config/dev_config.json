@@ -1,0 +1,52 @@
+{
+  "owner": "348038599083556864",
+  "socket_port": 3002,
+  "colorEmbed": "#F58B14",
+  "colorEmbedFalse": "#B61B1B",
+  "errors_channel": "823259546859995146",
+  "dev": true,
+  "guild_id": "674657975264346142",
+  "reports_channel": "721068322736570458",
+  "logger": true,
+  "mute_role": "680092341997928459",
+  "moderator_roles": ["675335584985907208"],
+  "gold_icon": ":coin:",
+  "currency": "<:Gold:474300456349335562>",
+  "auth_channel": "908288792882982912",
+  "roles": {
+    "flowers": "955870439773720616",
+    "adult": "955869854760591501",
+    "cheats": "955869465252360202"
+  },
+  "anti_flood": {
+    "max": 15
+  },
+  "punishments": {
+    "bans": [0, 1],
+    "mutes": [2],
+    "warns": [3]
+  },
+  "time_roles": {
+    "best_player": {
+      "id": "907712807393460234",
+      "time": "7d",
+      "roles": []
+    },
+    "half_of_ban": {
+      "id": "907712749629476874",
+      "time": "30d",
+      "roles": []
+    }
+  },
+  "modules_settings": {
+    "message": true,
+    "context": true,
+    "slash": true
+  },
+  "cli_settings": {
+    "listener": {
+      "description": "Слушает изменения в файлах и перезапускает модули (без полного перезапуска бота) или всего бота если файл вне модулей (модули: events, commands)",
+      "value": false
+    }
+  }
+}

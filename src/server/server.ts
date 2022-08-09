@@ -1,14 +1,22 @@
 import { MongoClient, ServerOptions } from 'mongodb';
-import constants from './config/constants.json';
+import constants from '../config/constants.json';
 import { connection_url_type } from './types';
 import express from 'express';
-import { port } from './config/config.json';
+import { server as server_config } from '../config/config.json';
 import { router_handler } from './router/index';
 import cors from 'cors';
 import { json } from 'body-parser';
 import { createServer } from 'https';
 import { readFileSync } from 'fs';
 import { check_authorisation } from './functions/check-authorisation';
+import { exec } from 'child_process';
+import { io } from 'socket.io-client';
+
+export const socket = io('https://localhost:3002');
+
+console.log('Сокет успешно подключен');
+
+const { port } = server_config;
 
 function _get_db_connection_url(): connection_url_type {
   const { dev, dev_db, db } = constants;
@@ -40,8 +48,8 @@ app.use(check_authorisation);
 app.use(json());
 
 const server_options: Partial<ServerOptions> = {
-  key: readFileSync('../ssl/localhost.key'),
-  cert: readFileSync('../ssl/localhost.crt'),
+  key: readFileSync('../../ssl/localhost.key'),
+  cert: readFileSync('../../ssl/localhost.crt'),
 };
 
 class Server {
@@ -55,6 +63,7 @@ class Server {
     await this._connect_db();
     await this._start_server();
     await console.log('Сервер запущен успешно');
+    await this._start_bot();
   }
 
   private async _connect_db() {
@@ -70,6 +79,22 @@ class Server {
     createServer(server_options, app).listen(port, () => {
       console.log(`Сервер запущен на порту: ${port}`);
     });
+  }
+
+  private async _start_bot() {
+    console.log('Начинаю запуск бота');
+
+    const bot_child = exec('node Main.js', {
+      cwd: '../bot/src/',
+    });
+
+    bot_child.stdout?.on('data', (data) => process.stdout.write(data));
+    bot_child.stdout?.on('error', (error) => console.error(error));
+
+    bot_child.stderr?.on('error', (error) => console.error(error));
+    bot_child.stderr?.on('data', (data) => process.stdout.write(data));
+
+    setTimeout(() => socket.connect(), 5000);
   }
 }
 

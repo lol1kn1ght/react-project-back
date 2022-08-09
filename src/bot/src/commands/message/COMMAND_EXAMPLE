@@ -1,0 +1,22 @@
+import { Message, type CommandInteraction } from "discord.js";
+import {
+  type Message_command_settings,
+  type Message_command,
+  args_type,
+} from "../../types";
+import { Message_template } from "../../config/templates_list";
+
+export class Command extends Message_template implements Message_command {
+  settings: Readonly<Message_command_settings> = {
+    name: COMMAND_EXAMPLE,
+    description: COMMAND_EXAMPLE,
+  };
+
+  constructor(private args: args_type, private message: Message) {
+    super(message);
+  }
+
+  async execute() {
+    this.message.reply("Test");
+  }
+}

@@ -3,13 +3,14 @@ import {
   db_user_type,
   api_user_data_type,
   api_autorise_data_type,
-} from 'types';
+  session_id_type,
+} from '@server/types';
 import { Route_template } from '../../route_template';
 import { db } from '../../../server';
 import axios from 'axios';
 import crypto from 'crypto-js';
 import duration from 'parse-duration';
-import { hash_key } from '../../../config/constants.json';
+import { hash_key } from '../../../../config/constants.json';
 
 export class LoginRoute extends Route_template {
   constructor(private req: Request, private res: Response) {
@@ -85,9 +86,10 @@ export class LoginRoute extends Route_template {
       }
     )) as db_user_type | null;
 
-    const session_id = {
+    const session_id: session_id_type = {
       token: access_token,
       expired_at: new Date().getTime() + duration('1w'),
+      member_id: user.id,
     };
     const enc_session_id = crypto.AES.encrypt(
       JSON.stringify(session_id),
@@ -109,6 +111,7 @@ export class LoginRoute extends Route_template {
       const new_data: db_user_type = {
         login: user.id,
         session_id: enc_session_id,
+        token: access_token,
       };
 
       response_data.db_user_data = new_data;

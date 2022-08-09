@@ -1,5 +1,5 @@
 import crypto from 'crypto-js';
-import { hash_key } from '../config/constants.json';
+import { hash_key } from '../../config/constants.json';
 
 export function decrypt<T extends object>(data: string): T | undefined {
   try {
